@@ -6,10 +6,10 @@
 
 with fhv_tripdata as 
 (
-  select *,
-    row_number() over(partition by pickup_datetime) as rn
+  select *
   from {{ source('staging', 'fhv_table') }}
-  where extract(year from pickup_datetime) = 2019
+  where dispatching_base_num is not null and
+    extract(year from pickup_datetime) = 2019
 )
 select  
    -- identifiers
@@ -22,12 +22,11 @@ select
     -- timestamps
     cast(pickup_datetime as timestamp) as pickup_datetime,
     cast(dropoff_datetime as timestamp) as dropoff_datetime
-from fhv_tripdata
-where rn = 1        
+from fhv_tripdata 
 
--- dbt build --select <model_name> --vars '{'is_test_run': 'false'}'
-{% if var('is_test_run', default=true) %}
+-- -- dbt build --select <model_name> --vars '{'is_test_run': 'false'}'
+-- {% if var('is_test_run', default=true) %}
 
-  limit 100
+--   limit 100
 
-{% endif %}
+-- {% endif %}
