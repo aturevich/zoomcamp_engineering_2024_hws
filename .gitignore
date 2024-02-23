@@ -220,3 +220,7 @@ magic-zoomcamp/*
 /mage_zoomcamp/personal-gcp.json
 /mage_zoomcamp/magic-zoomcamp/.ssh_tunnel
 /green_taxi_2022
+/dbt_data
+/batch/code/fhv
+/batch/zones
+/batch/data
